@@ -1,5 +1,5 @@
 {
-    "name": "pighand-framework-koa",
+    "name": "@pighand/framework-koa",
     "version": "0.1.0",
     "description": "基于Koa快速开发框架",
     "main": "index.js",
