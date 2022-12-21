@@ -1,0 +1,30 @@
+import * as mongoose from 'mongoose';
+import { Model as sequelizeModel } from 'sequelize-typescript';
+import { DbType } from './dbTypeEnum';
+import { pageResultSchema, pageOptionSchema, listOptionSchema, whereParamConfig } from './querySchema';
+import { versionSchema } from './versionSchema';
+declare class Curd {
+    defModelObject: mongoose.Model<any> | sequelizeModel;
+    constructor(model?: mongoose.Model<any> | sequelizeModel);
+    getDbType(model?: mongoose.Model<any> | sequelizeModel): DbType;
+    getWhereParamConfig(model?: mongoose.Model<any> | sequelizeModel): whereParamConfig;
+    create(params: object, version?: versionSchema): Promise<mongoose.Document>;
+    create(params: object, model: mongoose.Model<any> | sequelizeModel, version?: versionSchema): Promise<mongoose.Document>;
+    getWhereParam(wpc: whereParamConfig, params: any): any;
+    getWhereParam(model: mongoose.Model<any> | sequelizeModel, params: any): any;
+    query(whereParam: object, option: pageOptionSchema): Promise<pageResultSchema<any>>;
+    query(whereParam: object, model: mongoose.Model<any>, option: pageOptionSchema): Promise<pageResultSchema<any>>;
+    query(whereParam: object, option?: listOptionSchema): Promise<Array<any>>;
+    query(whereParam: object, model: mongoose.Model<any>, option?: listOptionSchema): Promise<Array<any>>;
+    find(id: string | number | mongoose.ObjectId): Promise<mongoose.Document>;
+    find(id: string | number | mongoose.ObjectId, model: mongoose.Model<any> | sequelizeModel): Promise<mongoose.Document>;
+    update(where: string | number | mongoose.ObjectId | object, params: any, version?: versionSchema): Promise<void>;
+    update(where: string | number | mongoose.ObjectId | object, params: object, model: mongoose.Model<any> | sequelizeModel, version?: versionSchema): Promise<void>;
+    logicalDelete(model: mongoose.Model<any> | sequelizeModel, id: string | number | mongoose.ObjectId, version?: versionSchema): Promise<void>;
+    logicalDelete(model: mongoose.Model<any> | sequelizeModel, where: object, version?: versionSchema): Promise<void>;
+    physicsDelete(id: string | number | mongoose.ObjectId): Promise<void>;
+    physicsDelete(id: string | number | mongoose.ObjectId, model: mongoose.Model<any> | sequelizeModel): Promise<void>;
+    physicsDelete(where: object): Promise<void>;
+    physicsDelete(where: object, model: mongoose.Model<any> | sequelizeModel): Promise<void>;
+}
+export default Curd;
