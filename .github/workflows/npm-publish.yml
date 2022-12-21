@@ -13,13 +13,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: checkout
+        uses: actions/checkout@v3
+        
+      - name: install node
+        uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm ci
-      - run: npm build
-      - run: rm -rf src
+      
+      - name: install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: true
+    
+      - name: install packages
+        run: pnpm install
+        
+      - name: build
+        run: pnpm build
+        
+      - name: rm src
+        run: rm -rf src
 
   publish-npm:
     needs: build
