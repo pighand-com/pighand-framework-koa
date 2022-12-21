@@ -35,7 +35,6 @@ jobs:
         
       - name: rm src
         run: rm -rf src
-        working-directory: ./temp
 
   publish-npm:
     needs: build
