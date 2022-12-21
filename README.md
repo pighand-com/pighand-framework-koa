@@ -4,12 +4,12 @@
 
 ### 快速开始
 
-1. npm/yarn/pnpm add pighand-framework-koa
+1. npm/yarn/pnpm add @pighand/pighand-framework-koa
 
 2. 配置
 
 ```
-import { PighandFramework } from 'pighand-framework-koa';
+import { PighandFramework } from '@pighand/pighand-framework-koa';
 
 const { app } = PighandFramework({});
 ```
