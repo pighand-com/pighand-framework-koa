@@ -203,7 +203,7 @@ class Curd {
      */
     async query(
         whereParam: object,
-        model: mongoose.Model<any>,
+        model: mongoose.Model<any> | sequelizeModel,
         option: pageOptionSchema,
     ): Promise<pageResultSchema<any>>;
 
@@ -226,7 +226,7 @@ class Curd {
      */
     async query(
         whereParam: object,
-        model: mongoose.Model<any>,
+        model: mongoose.Model<any> | sequelizeModel,
         option?: listOptionSchema,
     ): Promise<Array<any>>;
 

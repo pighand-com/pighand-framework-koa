@@ -70,7 +70,7 @@ interface BaseServiceInterface {
 }
 export { BaseServiceInterface };
 
-export default (modelObject?: mongoose.Model<any>) => {
+export default (modelObject?: mongoose.Model<any> | sequelizeModel) => {
     return class BaseService extends SuperBase implements BaseServiceInterface {
         model: mongoose.Model<any> | sequelizeModel;
 
@@ -93,15 +93,15 @@ export default (modelObject?: mongoose.Model<any>) => {
             // 根据删除字段判断是否是逻辑删除
             const dbType = this.db.getDbType();
             if (dbType == DbType.MONGO) {
-                const { schema = {} } = this.model || {};
+                const { schema = {} } =
+                    (this.model as mongoose.Model<any>) || {};
                 const { paths = {} }: any = schema;
                 if (paths['deleted'] || paths['delete']) {
                     this.isLogicalDelete = true;
                 }
             } else if (dbType == DbType.MYSQL) {
-                const { schema = {} } = this.model || {};
-                const { paths = {} }: any = schema;
-                if (paths['deleted'] || paths['delete']) {
+                const schema: any = (this.model as sequelizeModel) || {};
+                if (schema['deleted'] || schema['delete']) {
                     this.isLogicalDelete = true;
                 }
             }
