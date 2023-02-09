@@ -5,11 +5,10 @@ import {
     PighandFramework,
 } from './frameworkConfig';
 
-import checkToken from './authorization/checkToken';
+import { checkJWT, makeJWT } from './authorization/checkToken';
 import {
     statusKey,
     getLoginUserInfo,
-    checkJWT,
     setLoginUserInfo,
 } from './authorization/loginUserInfo';
 
@@ -56,11 +55,11 @@ export {
     PighandFramework,
 
     // auth
-    checkToken,
     statusKey,
     getLoginUserInfo,
-    checkJWT,
     setLoginUserInfo,
+    checkJWT,
+    makeJWT,
 
     // db
     Curd,

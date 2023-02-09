@@ -1,16 +1,27 @@
 import { Context } from 'koa';
-import { checkJWT, setLoginUserInfo } from './loginUserInfo';
+import * as jwt from 'jsonwebtoken';
+import { tokenHeaderKey, analysisJWT, setLoginUserInfo } from './loginUserInfo';
+
+import { frameworkConfig } from '../frameworkConfig';
 
 /**
- * 校验token
+ * 生成JWT
  */
-export default function checkToken(isCheckToken = true) {
+export const makeJWT = (loginUserInfo: string | Buffer | object) => {
+    return jwt.sign(loginUserInfo, frameworkConfig.jwt_salt);
+};
+
+/**
+ * 校验JWT
+ * @param isCheckToken token是否必传，默认true
+ */
+export const checkJWT = (isCheckToken = true) => {
     return async (ctx: Context, next: any) => {
         const header = ctx.header;
-        if (header['authorization']) {
+        if (header[tokenHeaderKey]) {
             let loginUserInfo: any = {};
             try {
-                loginUserInfo = checkJWT(ctx);
+                loginUserInfo = analysisJWT(ctx);
             } catch (e) {
                 if (isCheckToken) {
                     ctx.throw(401, '无权限');
@@ -26,4 +37,4 @@ export default function checkToken(isCheckToken = true) {
 
         await next();
     };
-}
+};

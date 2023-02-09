@@ -218,10 +218,13 @@ service 继承 BaseService，扩展以下方法：
 }
 ```
 
-4. checkToken(isCheckToken: boolean)\
-   权限校验，一般当做 Router、Controller 中间件使用；
+4. checkJWT(isCheckToken: boolean)\
+   权限校验，一般当做 Router、Controller 中间件使用 (Ex: @Controller('user', [checkJWT]))；
    必传 token 没传，返回 401；
    登录信息从 ctx.state[statusKey]中取，statusKey 默认“loginUserInfo”，可在 PighandFramework 中自定义。
+
+5. makeJWT(loginUserInfo: string | Buffer | object)\
+   生成 JWT
 
 ### 数据库操作
 
