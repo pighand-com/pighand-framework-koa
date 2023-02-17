@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import * as mongoose from 'mongoose';
-import { Model as sequelizeModel } from 'sequelize-typescript';
+import { ModelStatic } from 'sequelize-typescript';
 
 import DbCrud from '../db/crud';
 import SuperBase from './superBase';
@@ -9,7 +9,7 @@ import { whereParamConfig } from '../db/querySchema';
 import { pageOptionSchema, listOptionSchema } from '../db/querySchema';
 
 interface BaseServiceInterface {
-    model: mongoose.Model<any> | sequelizeModel;
+    model: mongoose.Model<any> | ModelStatic;
     db: DbCrud;
     autoWpc: whereParamConfig;
 
@@ -21,7 +21,7 @@ interface BaseServiceInterface {
     integrationCreate(
         ctx: Context,
         params: any,
-    ): Promise<mongoose.Document | sequelizeModel>;
+    ): Promise<mongoose.Document | ModelStatic>;
 
     /**
      * 内置列表、分页查询
@@ -36,7 +36,7 @@ interface BaseServiceInterface {
      */
     integrationFind(
         id: string | number | mongoose.ObjectId,
-    ): Promise<mongoose.Document | sequelizeModel>;
+    ): Promise<mongoose.Document | ModelStatic>;
 
     /**
      * 内置修改
@@ -70,9 +70,9 @@ interface BaseServiceInterface {
 }
 export { BaseServiceInterface };
 
-export default (modelObject?: mongoose.Model<any> | sequelizeModel) => {
+export default (modelObject?: mongoose.Model<any> | ModelStatic) => {
     return class BaseService extends SuperBase implements BaseServiceInterface {
-        model: mongoose.Model<any> | sequelizeModel;
+        model: mongoose.Model<any> | ModelStatic;
 
         // 数据库操作
         db: DbCrud;
@@ -100,7 +100,7 @@ export default (modelObject?: mongoose.Model<any> | sequelizeModel) => {
                     this.isLogicalDelete = true;
                 }
             } else if (dbType == DbType.MYSQL) {
-                const schema: any = (this.model as sequelizeModel) || {};
+                const schema: any = (this.model as ModelStatic) || {};
                 if (schema['deleted'] || schema['delete']) {
                     this.isLogicalDelete = true;
                 }

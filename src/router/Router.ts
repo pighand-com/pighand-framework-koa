@@ -1,11 +1,13 @@
 import 'reflect-metadata';
 import * as path from 'path';
 import * as glob from 'glob';
-import * as Application from 'koa';
-import * as KoaRouter from 'koa-router';
+import Koa from 'koa';
+import KoaRouter from 'koa-router';
+
+import { Context } from 'koa';
 
 export interface RouterConfigInterface {
-    app?: Application;
+    app?: Koa;
     router?: KoaRouter;
     basePath?: string;
     appMiddleware?: Array<(...args: any) => any>;
@@ -58,7 +60,7 @@ function _initRouter(
 
 export const Router = (config: RouterConfigInterface) => {
     const {
-        app = new Application(),
+        app = new Koa(),
         router = new KoaRouter(),
         basePath = '/',
         appMiddleware = [],
@@ -88,7 +90,7 @@ export const Router = (config: RouterConfigInterface) => {
 
 export const Controller = (
     path?: string,
-    beforeMiddleware?: Array<() => void>,
+    beforeMiddleware?: Array<(ctx: Context, next: any) => Promise<void>>,
 ) => {
     return (target: any) => {
         const { name } = target;
@@ -112,7 +114,7 @@ function _getRouterFunctionConfig(
     method: 'get' | 'post' | 'put' | 'delete',
     functionName: string,
     functionObject: any,
-    beforeMiddleware?: Array<() => void>,
+    beforeMiddleware?: Array<(ctx: Context, next: any) => Promise<void>>,
 ) {
     const routerControllerConfig = routerConfigs[className] || {};
     const functions = routerControllerConfig.functions || [];
@@ -129,7 +131,7 @@ function _getRouterFunctionConfig(
 
 export const Get = (
     path?: string,
-    beforeMiddleware?: Array<(...args: any) => any>,
+    beforeMiddleware?: Array<(ctx: Context, next: any) => Promise<void>>,
 ) => {
     return (target: any, propertyKey: string, descriptor: any) => {
         const { name } = target.constructor;
@@ -147,7 +149,7 @@ export const Get = (
 
 export const Put = (
     path?: string,
-    beforeMiddleware?: Array<(...args: any) => any>,
+    beforeMiddleware?: Array<(ctx: Context, next: any) => Promise<void>>,
 ) => {
     return (target: any, propertyKey: string, descriptor: any) => {
         const { name } = target.constructor;
@@ -165,7 +167,7 @@ export const Put = (
 
 export const Post = (
     path?: string,
-    beforeMiddleware?: Array<(...args: any) => any>,
+    beforeMiddleware?: Array<(ctx: Context, next: any) => Promise<void>>,
 ) => {
     return (target: any, propertyKey: string, descriptor: any) => {
         const { name } = target.constructor;
@@ -183,7 +185,7 @@ export const Post = (
 
 export const Delete = (
     path?: string,
-    beforeMiddleware?: Array<(...args: any) => any>,
+    beforeMiddleware?: Array<(ctx: Context, next: any) => Promise<void>>,
 ) => {
     return (target: any, propertyKey: string, descriptor: any) => {
         const { name } = target.constructor;

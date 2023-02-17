@@ -96,7 +96,7 @@ class Crud {
 
             let queryInValue = queryIn[key] || String(params[key]).split(',');
 
-            where[frameworkConfig?.wpcColumnMapping[key] || key] = {
+            where[frameworkConfig.wpcColumnMapping[key] || key] = {
                 $in: queryInValue,
             };
         });
@@ -107,7 +107,7 @@ class Crud {
                 return;
             }
 
-            const dbKeyColumn = frameworkConfig?.wpcColumnMapping[key] || key;
+            const dbKeyColumn = frameworkConfig.wpcColumnMapping[key] || key;
 
             if (wpc.eq && wpc.eq.includes(key)) {
                 where[dbKeyColumn] = value;
@@ -264,8 +264,8 @@ class Crud {
             return {
                 page: {
                     total: result.count,
-                    size: Number(pageParams.size),
-                    current: Number(pageParams.current),
+                    size: Number(page.size),
+                    current: Number(page.current),
                 },
                 list: result.rows,
             };

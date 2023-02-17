@@ -113,7 +113,7 @@ class Crud {
                     .map((item: string) => new mongoose.Types.ObjectId(item));
             }
 
-            where[frameworkConfig?.wpcColumnMapping[key] || key] = {
+            where[frameworkConfig.wpcColumnMapping[key] || key] = {
                 $in: queryInValue,
             };
         });
@@ -128,7 +128,7 @@ class Crud {
                 value = new mongoose.Types.ObjectId(value);
             }
 
-            const dbKeyColumn = frameworkConfig?.wpcColumnMapping[key] || key;
+            const dbKeyColumn = frameworkConfig.wpcColumnMapping[key] || key;
 
             if (wpc.eq && wpc.eq.includes(key)) {
                 where[dbKeyColumn] = value;

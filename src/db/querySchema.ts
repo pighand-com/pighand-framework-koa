@@ -12,7 +12,7 @@ export interface pageResultSchema<T> {
     list: Array<T>;
 }
 
-abstract class queryOptionSchema {
+interface queryOptionSchema {
     /**
      * mongoose
      */
@@ -24,16 +24,16 @@ abstract class queryOptionSchema {
     /**
      * sequelize
      */
-    attributes: any;
-    include: any;
-    order: any;
+    attributes?: any;
+    include?: any;
+    order?: any;
 }
 
-export abstract class pageOptionSchema extends queryOptionSchema {
+export interface pageOptionSchema extends queryOptionSchema {
     page: pageParams;
 }
 
-export abstract class listOptionSchema extends queryOptionSchema {}
+export type listOptionSchema = queryOptionSchema;
 
 export enum betweenEndingEnum {
     BEGIN = 'begin',

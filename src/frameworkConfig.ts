@@ -1,5 +1,5 @@
-import * as Application from 'koa';
-import * as KoaRouter from 'koa-router';
+import Application from 'koa';
+import KoaRouter from 'koa-router';
 
 import { RouterConfigInterface, Router } from './router/Router';
 
