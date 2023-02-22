@@ -63,6 +63,11 @@ export interface FrameworkConfigSchema {
     jwt_salt?: string;
 
     /**
+     * jwt过期时间，单位秒，默认7天
+     */
+    jwt_expires_in?: number;
+
+    /**
      * jwt中用户唯一标识字段，默认“id”
      */
     jwt_user_id?: string;
@@ -87,8 +92,12 @@ export interface FrameworkConfigSchema {
     wpcColumnMapping?: any;
 }
 
+/**
+ * 默认值
+ */
 export const frameworkConfig: FrameworkConfigSchema = {
     jwt_salt: 'Qwe_1A2s3d!',
+    jwt_expires_in: 1 * 60 * 60 * 24 * 7,
     jwt_user_id: 'id',
 
     dbVersion: {

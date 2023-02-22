@@ -6,9 +6,17 @@ import { frameworkConfig } from '../frameworkConfig';
 
 /**
  * 生成JWT
+ * @param loginUserInfo 用户信息
+ * @param expiresIn 过期时间，单位秒。如果不传，默认使用frameworkConfig.jwt_expires_in
+ * @returns
  */
-export const makeJWT = (loginUserInfo: string | Buffer | object) => {
-    return jwt.sign(loginUserInfo, frameworkConfig.jwt_salt);
+export const makeJWT = (
+    loginUserInfo: string | Buffer | object,
+    expiresIn?: number,
+) => {
+    return jwt.sign(loginUserInfo, frameworkConfig.jwt_salt, {
+        expiresIn: expiresIn || frameworkConfig.jwt_expires_in,
+    });
 };
 
 /**

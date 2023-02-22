@@ -10,6 +10,9 @@ import { frameworkConfig } from '../../frameworkConfig';
 
 const whereParamConfigCache: Map<string, whereParamConfig> = new Map();
 
+/**
+ * mysql实现
+ */
 class Crud {
     objectIdColumn: Array<string> = [];
 

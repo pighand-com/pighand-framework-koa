@@ -14,17 +14,13 @@ export const generatePassword = (password: string) => {
             if (err) {
                 reject(err);
             } else {
-                bcrypt.hash(
-                    password,
-                    salt,
-                    (err: Error, hash: string) => {
-                        if (err) {
-                            reject(err);
-                        } else {
-                            resolve(hash);
-                        }
-                    },
-                );
+                bcrypt.hash(password, salt, (err: Error, hash: string) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(hash);
+                    }
+                });
             }
         });
     });

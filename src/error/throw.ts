@@ -6,6 +6,9 @@ interface errorMessage {
     data: JSON;
 }
 
+/**
+ * 抛出异常
+ */
 class Throw {
     throw(message: string): void;
     throw(message: string, status: number): void;
