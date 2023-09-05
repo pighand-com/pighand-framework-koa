@@ -74,7 +74,7 @@ function _initRouter(
                 ...beforeMiddleware,
                 ...classBeforeMiddleware,
                 ...functionBeforeMiddleware,
-                functionObject.bind(classObject),
+                functionObject.bind(new classObject()),
             ];
 
             // 生成router
