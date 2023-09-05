@@ -66,6 +66,10 @@ router_config?: {
 
     // controller路径，配置了路径支持controller装饰器
     controllers?: Array<string> | Array<(...args: any) => any>;
+
+    // 排除默认中间件 默认会添加KoaBody、KoaHelmet
+    // 如添加多个KoaBody，会导致报错：InternalServerError: stream is not readable
+    excludeDefaultMiddleware?: Array<'KoaBody' | 'KoaHelmet'>;
 }
 
 /**

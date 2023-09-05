@@ -1,5 +1,7 @@
 import Application from 'koa';
 import KoaRouter from 'koa-router';
+import KoaBody from 'koa-body';
+import KoaHelmet from 'koa-helmet';
 
 import { RouterConfigInterface, Router } from './router/Router';
 
@@ -90,6 +92,12 @@ export interface FrameworkConfigSchema {
      * @params {object} { 'queryColumn': 'dbColumn' }
      */
     wpcColumnMapping?: any;
+
+    /**
+     * 排除默认中间件
+     * KoaBody | KoaHelmet
+     */
+    excludeDefaultMiddleware?: Array<'KoaBody' | 'KoaHelmet'>;
 }
 
 /**
@@ -115,15 +123,33 @@ export const frameworkConfig: FrameworkConfigSchema = {
 
 export const PighandFramework = (fc: FrameworkConfigSchema) => {
     frameworkConfig.jwt_salt = fc.jwt_salt || frameworkConfig.jwt_salt;
+    frameworkConfig.jwt_expires_in =
+        fc.jwt_expires_in || frameworkConfig.jwt_expires_in;
     frameworkConfig.jwt_user_id = fc.jwt_user_id || frameworkConfig.jwt_user_id;
     frameworkConfig.dbVersion = fc.dbVersion || frameworkConfig.dbVersion;
     frameworkConfig.wpcColumnMapping =
         fc.wpcColumnMapping || frameworkConfig.wpcColumnMapping;
 
+    // 默认中间件
+    const defaultMiddleware = [];
+    const excludeDefaultMiddleware = fc.excludeDefaultMiddleware || [];
+    if (!excludeDefaultMiddleware.includes('KoaBody')) {
+        defaultMiddleware.push(KoaBody({ multipart: true }));
+    }
+    if (!excludeDefaultMiddleware.includes('KoaHelmet')) {
+        defaultMiddleware.push(KoaHelmet());
+    }
+
     const routerConfig: RouterConfigInterface = fc.router_config || {
         app: new Application(),
         router: new KoaRouter(),
     };
+
+    routerConfig.appMiddleware = [
+        ...defaultMiddleware,
+        ...(routerConfig.appMiddleware || []),
+    ];
+
     frameworkConfig.router_config = routerConfig;
     const router = Router(routerConfig);
 
