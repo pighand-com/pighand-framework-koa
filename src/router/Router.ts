@@ -133,6 +133,7 @@ export const Router = (config: RouterConfigInterface) => {
         app.use(appMiddlewareItem);
     });
     app.use(router.routes());
+    app.use(router.allowedMethods());
 
     return { app, router };
 };

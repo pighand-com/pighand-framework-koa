@@ -14,7 +14,7 @@ export { BodySchema };
 export default function (ctx: Context, data?: any, err?: any, code?: number) {
     const body: BodySchema = {
         code: code || 200,
-        data: data || '',
+        data: data === undefined || data === null ? '' : data,
         error: err || '',
     };
 

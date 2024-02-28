@@ -45,7 +45,6 @@ import {
 } from './router/Router';
 
 import { checkSchema, checkParams } from './utils/checkParamsUtil';
-import { generatePassword, comparePassword } from './utils/cipherUtil';
 
 export {
     // framework config
@@ -100,6 +99,4 @@ export {
     // util
     checkSchema,
     checkParams,
-    generatePassword,
-    comparePassword,
 };

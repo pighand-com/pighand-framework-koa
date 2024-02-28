@@ -271,9 +271,7 @@ class Curd {
         if (model) {
             const modelType = this.getModelType(model);
             if (!modelType) {
-                realOption = { ...model, ...(option || {}) } as
-                    | listOptionSchema
-                    | pageOptionSchema;
+                realOption = model as listOptionSchema | pageOptionSchema;
             } else {
                 realModel = model as mongoose.Model<any> | ModelStatic;
             }
