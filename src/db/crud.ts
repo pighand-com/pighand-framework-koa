@@ -183,8 +183,8 @@ class Curd {
         let realModel = this.defModelObject;
 
         if (
-            wpcOrModel instanceof mongoose.Model<any> ||
-            wpcOrModel instanceof sequelizeModel
+            wpcOrModel.constructor === mongoose.Model ||
+            wpcOrModel.constructor === sequelizeModel
         ) {
             wpc = this.getWhereParamConfig(
                 wpcOrModel as mongoose.Model<any> | ModelStatic,
