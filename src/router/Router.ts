@@ -153,9 +153,11 @@ export const Controller = (
     return (target: any) => {
         const { name } = target;
 
-        const routerControllerConfig = routerConfigs[name] || {};
+        let routerControllerConfig = routerConfigs[name];
         if (routerControllerConfig) {
             throw new Error(`Class name "${name}" 重复定义`);
+        } else {
+            routerControllerConfig = {};
         }
 
         const { functions = [] } = routerControllerConfig;

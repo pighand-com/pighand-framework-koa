@@ -1,6 +1,6 @@
 {
     "name": "@pighand/pighand-framework-koa",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "基于Koa快速开发框架",
     "main": "index.js",
     "typings": "index.d.ts",
